@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  rel="stylesheet" href="styles.css"> 
+    <title>Block Magic</title>
+</head>
+<body>
+    <div id="tobeblur">
+        <section class="sections">
+            <h id="headings">Program</h>
+            <section id="program" ></section>
+        </section>
+        <section class="sections" >
+            <h id="headings">Variables</h>
+            <section id="variable_container" ></section>
+            <h id="headings">Block Set</h>
+            <section id="blockset">
+                <div id="print" class="pri blocks" draggable="true">
+                    <h>Print</h>
+                    <input type="text" placeholder="Message" id="print_output">
+                </div>
+                
+                <div id="break_point" class="bre blocks" draggable="true">
+                    <h>New Lines</h>
+                    <input id="br_input" type="number" min="0" max="100" placeholder="0-100">
+                </div>
+
+                <div id="empty_space" class="spa blocks" draggable="true">
+                    <h>Spaces</h>
+                    <input type="number" min="0" max="500" placeholder="0-500" id="space_input">
+                </div>
+                <div id="clear_screen" class="clr blocks" draggable="true">Clear Screen</div>
+                <div id="variable" style="width: 230px;" class="vari blocks" draggable="true">
+                    <h>Variable</h>
+                    <select id="dropdow" onchange="valueTypeDetermine()" style="width: 40px; outline: none; border-radius: 10px;">
+                        <option value="int">Int</option>
+                        <option value="float">Float</option>
+                        <option value="string">String</option>
+                    </select>
+                    <input style="width: 50px; border-radius: 15px; outline: none; border: 1px solid rgba(0, 0, 0, 0.411);" type="text" placeholder="Name" id="varname">
+                    <input style="width: 50px; border-radius: 15px; outline: none; border: 1px solid rgba(0, 0, 0, 0.411);" type="number" placeholder="Value" id="varvalue">
+                </div>
+            </section>
+            <div style="display: flex; align-items: center; gap: 3px;" >
+                <button onclick="run()">Run</button>
+            </div>
+        </section>
+        <section class="sections">
+            <h id="headings">Output:</h>
+            <section id="output_section">
+                <p id="output"></p>
+            </section>
+            <button style="width: 50px; height: 30px;" onclick="cl()">Clear</button>
+        </section>
+    </div>
+   
+   
+</body>
+<script src="variable.js"></script>
+<script src="Source_Code.js"></script>
+</html>
