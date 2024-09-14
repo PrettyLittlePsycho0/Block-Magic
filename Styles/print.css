@@ -1,0 +1,26 @@
+.pri {
+    border: 2px solid yellow;
+    color: rgb(255, 187, 0);
+}
+
+#print_output {
+    width: 100px;
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 2px;
+    font-family: Arial, Helvetica, sans-serif;
+    border: 1px solid rgba(0, 0, 0, 0.123);
+    outline: none;
+}
+
+#print_output:focus {
+    border: 2px solid rgb(255, 187, 0);
+}
+
+#print {
+    cursor: grab;
+} 
+
+#print:active {
+    cursor: grabbing;
+}

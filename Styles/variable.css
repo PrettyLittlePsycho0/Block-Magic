@@ -1,0 +1,63 @@
+.vari {
+    color: maroon;
+    border: 2px solid red;
+}
+
+.boxes {
+    width: 43%;
+    height: 85%;
+    background-color: rgb(148, 148, 148);
+    border-radius: 15px;
+    display: flex;
+    flex-direction: column; 
+    gap: 40px; 
+    padding: 2%;
+}
+
+#variable {
+    cursor: grab;
+} 
+
+#variable:active {
+    cursor: grabbing;
+}
+
+#varname {
+    width: 50px; 
+    border-radius: 15px; 
+    outline: none; 
+    border: 1px solid rgba(0, 0, 0, 0.411); 
+    text-align: center;
+}
+#varname:focus {
+    border: 2px solid red;
+}
+
+#varvalue {
+    width: 50px; 
+    border-radius: 15px; 
+    outline: none; 
+    border: 1px solid rgba(0, 0, 0, 0.411); 
+    text-align: center;
+}
+#varvalue:focus {
+    border: 2px solid red;
+}
+
+.created_variables {
+    width: auto;
+    height: 25px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    font-weight: bold;
+    background-color: aliceblue;
+    border-radius: 5px;
+    border: 1px solid red;
+    padding: 2px;
+    cursor: grab;
+}
+.created_variables:active {
+    cursor: grabbing;
+}

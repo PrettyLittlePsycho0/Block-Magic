@@ -1,0 +1,23 @@
+.bre {
+    width: 160px;
+    border: 2px solid blue;
+    color: rgb(2, 112, 255);
+}
+
+#br_input {
+    border-radius: 15px;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.322);
+}
+
+#br_input:focus {
+    border: 2px solid blue;
+}
+
+#break_point {
+    cursor: grab;
+}
+
+#break_point:active {
+    cursor: grabbing;
+}

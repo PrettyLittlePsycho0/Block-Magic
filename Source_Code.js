@@ -29,25 +29,58 @@ program.addEventListener('drop', (e) => {
     const id = e.dataTransfer.getData('text');
     const draggableElement = document.getElementById(id);
     const clone = draggableElement.cloneNode(true);
-    clone.style.opacity = 1;
-    e.dataTransfer.setDragImage(clone, 0, 0);
     clone.className = draggableElement.className;
+    clone.setAttribute("id", null);
+    clone.setAttribute("draggable", "false");
     clone.classList.add('code');
-    if (clone.classList.contains("vari")) {
-        createVariable(clone);
-        (clone.children[1]).style.display = "none";
-    }
+
     clone.addEventListener('mousedown', (event) => {
         if (event.button === 1) {
             clone.remove();
         }
     });
-    program.appendChild(clone);
+
+    if (clone.classList.contains("vari")) {
+        (clone.children[1]).style.display = "none";
+        const n = clone.children[2];
+        n.style.display = "none";
+        const ff = document.createElement('p');
+        ff.innerHTML = n.value + "&nbsp;" + "Initialized."
+        const m = clone.children[3];m.style.display = "none"
+        createVariable(clone);
+        clone.appendChild(ff);
+    }
+  
+    if (clone.classList.contains("pri")) {
+        clone.addEventListener('drop', (e) => {
+            if (e.target.id === "print_output") {
+                const iD = e.dataTransfer.getData('text');
+                const ele = document.getElementById(iD);
+                const cl = ele.cloneNode(true);
+                const tar = document.getElementById(e.target.id);
+                tar.remove();
+                cl.style.height = "20px";
+                clone.appendChild(cl)
+                
+            }
+        });
+    }
+    if (!(e.target.id === "print_output")) {
+        program.appendChild(clone);
+    }
 });
+
 
 function print(element) {
     const s = element.querySelector('input[type="text"]');
-    var input = s.value;
+    var input;
+    if (s === null) {
+        const w = (element.querySelector('.created_variables')).children[1];
+        input = w.textContent;
+    }
+    else {
+        input = s.value;
+    }
     output.innerText += input;
 }
 

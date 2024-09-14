@@ -1,0 +1,12 @@
+.clr {
+    color: chartreuse;
+    border: 2px solid lime;
+}
+
+#clear_screen {
+    cursor: grab;
+}
+
+#clear_screen:active {
+    cursor: grabbing;
+}

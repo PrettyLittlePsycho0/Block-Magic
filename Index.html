@@ -2,7 +2,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link  rel="stylesheet" href="styles.css"> 
+    <link  rel="stylesheet" href="Styles/styles.css">
+    <link  rel="stylesheet" href="Styles/print.css">
+    <link  rel="stylesheet" href="Styles/linebreak.css">
+    <link  rel="stylesheet" href="Styles/emptyspaces.css">
+    <link  rel="stylesheet" href="Styles/clearscreen.css">
+    <link  rel="stylesheet" href="Styles/variable.css">
     <title>Block Magic</title>
 </head>
 <body>
@@ -18,17 +23,17 @@
             <section id="blockset">
                 <div id="print" class="pri blocks" draggable="true">
                     <h>Print</h>
-                    <input type="text" placeholder="Message" id="print_output">
+                    <input style="text-align: center;" type="text" placeholder="Message" id="print_output">
                 </div>
                 
                 <div id="break_point" class="bre blocks" draggable="true">
                     <h>New Lines</h>
-                    <input id="br_input" type="number" min="0" max="100" placeholder="0-100">
+                    <input id="br_input" style="text-align: center;" type="number" min="0" max="100" placeholder="0-100">
                 </div>
 
                 <div id="empty_space" class="spa blocks" draggable="true">
                     <h>Spaces</h>
-                    <input type="number" min="0" max="500" placeholder="0-500" id="space_input">
+                    <input style="text-align: center;" type="number" min="0" max="500" placeholder="0-500" id="space_input">
                 </div>
                 <div id="clear_screen" class="clr blocks" draggable="true">Clear Screen</div>
                 <div id="variable" style="width: 230px;" class="vari blocks" draggable="true">
@@ -38,8 +43,8 @@
                         <option value="float">Float</option>
                         <option value="string">String</option>
                     </select>
-                    <input style="width: 50px; border-radius: 15px; outline: none; border: 1px solid rgba(0, 0, 0, 0.411);" type="text" placeholder="Name" id="varname">
-                    <input style="width: 50px; border-radius: 15px; outline: none; border: 1px solid rgba(0, 0, 0, 0.411);" type="number" placeholder="Value" id="varvalue">
+                    <input type="text" placeholder="Name" id="varname">
+                    <input type="number" placeholder="Value" id="varvalue">
                 </div>
             </section>
             <div style="display: flex; align-items: center; gap: 3px;" >
