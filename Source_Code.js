@@ -67,8 +67,23 @@ program.addEventListener('drop', (e) => {
                     i.classList.add("pri_output");
                 });
                 const tar = clone.children[1];
-                tar.remove();
-                clone.appendChild(cl)
+                
+                var a
+                const b = document.querySelectorAll('.code')
+                b.forEach(i => {
+                    if (i.hasAttribute('var-id')) {
+                        a = document.querySelector(`[var-id = ${cl.getAttribute("var-id")}]`)
+                    }
+                })
+                 
+
+                if (a.compareDocumentPosition(clone) & Node.DOCUMENT_POSITION_FOLLOWING) {
+                    tar.remove();
+                    clone.appendChild(cl)
+                }
+                else {
+                    console.log("variable not defined");
+                }
             }
         });
     }

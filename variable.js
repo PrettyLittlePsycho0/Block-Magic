@@ -23,6 +23,8 @@ function createVariable(clone) {
     newVariable.addEventListener('dragstart', (e) =>{
         e.dataTransfer.setData('text/plain', e.target.id);
     });
+    newVariable.setAttribute("var-id", clone.querySelector('input[type="text"]').value)
+    clone.setAttribute("var-id", clone.querySelector('input[type="text"]').value)
 
     variableContainer.appendChild(newVariable);
 }
