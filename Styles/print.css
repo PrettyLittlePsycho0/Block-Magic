@@ -3,7 +3,7 @@
     color: rgb(255, 187, 0);
 }
 
-#print_output {
+.print_output {
     width: 100px;
     border-radius: 10px;
     padding-left: 5px;

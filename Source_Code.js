@@ -53,19 +53,26 @@ program.addEventListener('drop', (e) => {
   
     if (clone.classList.contains("pri")) {
         clone.addEventListener('drop', (e) => {
-            if (e.target.id === "print_output") {
+            if (e.target.classList.contains("print_output") || e.target.classList.contains("pri_output")) {
+                
                 const iD = e.dataTransfer.getData('text');
                 const ele = document.getElementById(iD);
-                const cl = ele.cloneNode(true);
-                const tar = document.getElementById(e.target.id);
-                tar.remove();
-                cl.style.height = "20px";
-                clone.appendChild(cl)
                 
+                const cl = ele.cloneNode(true);
+                cl.style.height = "20px";
+                cl.style.cursor = "normal";
+                cl.setAttribute("draggable", "false");
+                cl.classList.add("pri_output")
+                cl.childNodes.forEach(i => {
+                    i.classList.add("pri_output");
+                });
+                const tar = clone.children[1];
+                tar.remove();
+                clone.appendChild(cl)
             }
         });
     }
-    if (!(e.target.id === "print_output")) {
+    if (!(e.target.classList.contains("print_output") || e.target.classList.contains("pri_output"))) {
         program.appendChild(clone);
     }
 });

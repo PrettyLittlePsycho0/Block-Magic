@@ -3,17 +3,6 @@ const typeList = document.getElementById("dropdown");
 const variableContainer = document.getElementById("variable_container");
 const varValue = document.getElementById("varvalue");
 
-varValue.addEventListener('input', (e) => {
-    const periodRestrict = /[.]/g;
-
-    if (varValue.getAttribute("type", "number") ) {
-        if (periodRestrict.test(e.target.value)) {
-            e.target.value = (e.target.value).replace(periodRestrict, "");
-        }
-    }
-});
-
-
 function createVariable(clone) {
     const newVariable = document.createElement('div');
     newVariable.classList.add("created_variables");
@@ -22,7 +11,7 @@ function createVariable(clone) {
 
 
     const nameElement = document.createElement('p');
-    nameElement.innerHTML = ((clone.querySelector('input[type="text"]')).value) + " |&nbsp;";
+    nameElement.innerHTML = ((clone.querySelector('input[type="text"]')).value) + " |";
     newVariable.appendChild(nameElement);
 
     const valueElement = document.createElement('p');
