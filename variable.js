@@ -3,13 +3,15 @@ const typeList = document.getElementById("dropdown");
 const variableContainer = document.getElementById("variable_container");
 const varValue = document.getElementById("varvalue");
 
+
+
 function createVariable(clone) {
     const newVariable = document.createElement('div');
     newVariable.classList.add("created_variables");
     newVariable.classList.add("blocks");
     newVariable.setAttribute("id", ("id-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9)))
 
-
+    
     const nameElement = document.createElement('p');
     nameElement.innerHTML = ((clone.querySelector('input[type="text"]')).value) + " |";
     newVariable.appendChild(nameElement);
@@ -26,5 +28,8 @@ function createVariable(clone) {
     newVariable.setAttribute("var-id", clone.querySelector('input[type="text"]').value)
     clone.setAttribute("var-id", clone.querySelector('input[type="text"]').value)
 
+    
     variableContainer.appendChild(newVariable);
+    varnames.add(clone.querySelector('input[type="text"]').value);
+
 }

@@ -2,7 +2,7 @@ const draggables = document.querySelectorAll('.blocks');
 const program = document.getElementById('program');
 
 const output = document.getElementById("output");
-
+let varnames = new Set();
 draggables.forEach(i => {
     i.addEventListener('dragstart', (e) => {
         e.dataTransfer.setData('text/plain', e.target.id);
@@ -47,8 +47,13 @@ program.addEventListener('drop', (e) => {
             clone.remove();
         }
     });
+    
 
     if (clone.classList.contains("vari")) {
+        if (varnames.has(clone.querySelector('input[type="text"]').value)) {
+            console.log("Variable name already exists cunt!");
+            return;
+        }
         (clone.children[1]).style.display = "none";
         const n = clone.children[2];
         n.style.display = "none";
