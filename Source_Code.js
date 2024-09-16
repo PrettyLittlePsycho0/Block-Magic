@@ -36,6 +36,14 @@ program.addEventListener('drop', (e) => {
 
     clone.addEventListener('mousedown', (event) => {
         if (event.button === 1) {
+            if (clone.classList.contains("vari")) {
+                const c = document.querySelectorAll('.created_variables');
+                c.forEach(i => {
+                    if (i.getAttribute("var-id") === clone.getAttribute("var-id")) {
+                        i.remove();
+                    }
+                })
+            }
             clone.remove();
         }
     });
