@@ -79,7 +79,7 @@ program.addEventListener('drop', (e) => {
                                 border: 1px solid rgb(0, 0, 0, 0.4)`
         
         newValueEntry.value = initialValue;
-        newValueEntry.oninput = realtimeVariableChange(clone);
+        newValueEntry.setAttribute("oninput", "realtimeVariableChange(this)");
         clone.appendChild(newValueEntry);
         
         

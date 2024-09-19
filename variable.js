@@ -35,6 +35,7 @@ function createVariable(clone) {
 }
 
 function realtimeVariableChange(clone) {
-    const h = variableContainer.querySelector(`div[var-id="${clone.getAttribute("var-id")}"]`)
+    const h = variableContainer.querySelector(`div[var-id="${clone.parentElement.getAttribute("var-id")}"]`)
     
+    h.children[1].innerText = clone.value
 }
