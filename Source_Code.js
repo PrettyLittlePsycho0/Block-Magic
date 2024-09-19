@@ -1,7 +1,8 @@
 const draggables = document.querySelectorAll('.blocks');
 const program = document.getElementById('program');
-
 const output = document.getElementById("output");
+const errors = document.getElementById("errors");
+const error = document.getElementById("error");
 let varnames = new Set();
 draggables.forEach(i => {
     i.addEventListener('dragstart', (e) => {
@@ -50,12 +51,13 @@ program.addEventListener('drop', (e) => {
     
 
     if (clone.classList.contains("vari")) {
+        const n = clone.children[2];
         if (varnames.has(clone.querySelector('input[type="text"]').value)) {
-            console.log("Variable name already exists cunt!");
+            error.style.color = "red";
+            error.innerHTML += `"${n.value}" name already exists cunt!<br>`;
             return;
         }
         (clone.children[1]).style.display = "none";
-        const n = clone.children[2];
         n.style.display = "none";
         const ff = document.createElement('p');
         ff.innerHTML = n.value + "&nbsp;" + "Initialized."
@@ -63,7 +65,26 @@ program.addEventListener('drop', (e) => {
         createVariable(clone);
         clone.appendChild(ff);
     }
-  
+    
+    if (clone.classList.contains("created_variables")) {
+        const initialValue = (clone.children[1]).textContent;
+        clone.children[1].remove();
+        const newValueEntry = document.createElement('input')
+        newValueEntry.type = "number";
+        newValueEntry.placeholder = "Value";
+        
+        newValueEntry.style =  `border-radius: 10px; 
+                                text-align: center; 
+                                outline: none; 
+                                border: 1px solid rgb(0, 0, 0, 0.4)`
+        
+        newValueEntry.value = initialValue;
+        newValueEntry.oninput = realtimeVariableChange(clone);
+        clone.appendChild(newValueEntry);
+        
+        
+    }
+
     if (clone.classList.contains("pri")) {
         clone.addEventListener('drop', (e) => {
             if (e.target.classList.contains("print_output") || e.target.classList.contains("pri_output")) {
@@ -95,7 +116,8 @@ program.addEventListener('drop', (e) => {
                     clone.appendChild(cl)
                 }
                 else {
-                    console.log("variable not defined");
+                    error.style.color = "red";
+                    error.innerHTML += `Use ${cl.firstChild.textContent.replace("|", "")} after its definition asshole!<br>`;
                 }
             }
         });

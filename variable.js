@@ -33,3 +33,8 @@ function createVariable(clone) {
     varnames.add(clone.querySelector('input[type="text"]').value);
 
 }
+
+function realtimeVariableChange(clone) {
+    const h = variableContainer.querySelector(`div[var-id="${clone.getAttribute("var-id")}"]`)
+    
+}

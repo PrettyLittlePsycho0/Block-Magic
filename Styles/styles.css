@@ -63,7 +63,7 @@ button:active {
 
 #output_section {
     width: 700px;
-    height: 500px;
+    height: 420px;
     background-color: black;
     color: white;
     border-radius: 15px;
@@ -72,6 +72,14 @@ button:active {
     font-weight: 600;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.507);
     overflow: auto;
+}
+
+#errors {
+    width: 700px;
+    height: 90px;
+    background-color: black;
+    border-radius: 15px;
+    margin-top: 10px;
 }
 
 .blocks {
