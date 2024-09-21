@@ -51,38 +51,39 @@ program.addEventListener('drop', (e) => {
     
 
     if (clone.classList.contains("vari")) {
-        const n = clone.children[2];
+        const name = clone.children[2];
+        const value = clone.querySelector('input[type="number"]');
+        clone.setAttribute("var-id", clone.querySelector('input[type="text"]').value)
         if (varnames.has(clone.querySelector('input[type="text"]').value)) {
             error.style.color = "red";
-            error.innerHTML += `"${n.value}" name already exists cunt!<br>`;
+            error.innerHTML += `"${name.value}" name already exists cunt!<br>`;
             return;
         }
+        clone.setAttribute("typeof", t);
+        clone.setAttribute("stored-value", `${value.value}`);
         (clone.children[1]).style.display = "none";
-        n.style.display = "none";
-        const ff = document.createElement('p');
-        ff.innerHTML = n.value + "&nbsp;" + "Initialized."
-        const m = clone.children[3];m.style.display = "none"
+        name.style.display = "none";
+        const definedStatement = document.createElement('p');
+        definedStatement.innerHTML = name.value + "&nbsp;" + "Defined.";
+        value.style.display = "none";
         createVariable(clone);
-        clone.appendChild(ff);
+        name.remove();
+        value.remove();
+        clone.appendChild(definedStatement);
     }
-    
+
     if (clone.classList.contains("created_variables")) {
-        const initialValue = (clone.children[1]).textContent;
-        clone.children[1].remove();
-        const newValueEntry = document.createElement('input')
-        newValueEntry.type = "number";
-        newValueEntry.placeholder = "Value";
+        clone.innerText = "";
+        const name = document.createElement('p');
+        name.innerText = clone.getAttribute("var-id");
+        clone.appendChild(name);
         
-        newValueEntry.style =  `border-radius: 10px; 
-                                text-align: center; 
-                                outline: none; 
-                                border: 1px solid rgb(0, 0, 0, 0.4)`
-        
-        newValueEntry.value = initialValue;
-        newValueEntry.setAttribute("oninput", "realtimeVariableChange(this)");
-        clone.appendChild(newValueEntry);
-        
-        
+        const valueInput = document.createElement('input');
+        valueInput.setAttribute("type", clone.getAttribute("typeof") === "int" ? "number" : "text");
+        valueInput.setAttribute("placeholder", "Value");
+        valueInput.style = "text-align: center; border-radius: 10px; outline: none; border: 1px solid rgb(0, 0, 0, 0.4);"
+        valueInput.setAttribute("oninput", "realtimevaluechange(this, this.parentElement)")
+        clone.appendChild(valueInput);
     }
 
     if (clone.classList.contains("pri")) {
@@ -96,17 +97,19 @@ program.addEventListener('drop', (e) => {
                 cl.style.height = "20px";
                 cl.style.cursor = "normal";
                 cl.setAttribute("draggable", "false");
-                cl.classList.add("pri_output")
-                cl.childNodes.forEach(i => {
-                    i.classList.add("pri_output");
-                });
+                cl.classList.add("pri_output");
+                cl.setAttribute("id", null)
+              
                 const tar = clone.children[1];
                 
                 var a
                 const b = document.querySelectorAll('.code')
                 b.forEach(i => {
                     if (i.hasAttribute('var-id')) {
-                        a = document.querySelector(`[var-id = ${cl.getAttribute("var-id")}]`)
+                        a = document.querySelector(`[var-id = ${cl.getAttribute("var-id")}]`);
+                        const m = getClosestElement(clone, "var-id", cl);
+                        cl.setAttribute("stored-value", m.getAttribute("stored-value"));
+                        
                     }
                 })
                  
@@ -117,7 +120,7 @@ program.addEventListener('drop', (e) => {
                 }
                 else {
                     error.style.color = "red";
-                    error.innerHTML += `Use ${cl.firstChild.textContent.replace("|", "")} after its definition asshole!<br>`;
+                    error.innerHTML += `Use "${cl.firstChild.textContent}" after its definition asshole!<br>`;
                 }
             }
         });
@@ -132,8 +135,8 @@ function print(element) {
     const s = element.querySelector('input[type="text"]');
     var input;
     if (s === null) {
-        const w = (element.querySelector('.created_variables')).children[1];
-        input = w.textContent;
+        const w = (element.querySelector('.created_variables')).getAttribute("stored-value");
+        input = w;
     }
     else {
         input = s.value;
