@@ -1,5 +1,5 @@
 const variable = document.getElementById("variable");
- variableContainer = document.getElementById("variable_container");
+variableContainer = document.getElementById("variable_container");
 const varValue = document.getElementById("varvalue");
 
 var t = "int";
@@ -8,7 +8,7 @@ function f(d) {
 }
 
 
-function createVariable(clone) {
+function createVariable(clone, o) {
     const newVariable = document.createElement('div');
 
     newVariable.classList.add("created_variables");
@@ -30,7 +30,9 @@ function createVariable(clone) {
 
  
 
-    
+    if (o.target.classList.contains("inp")) {
+        return;
+    }
     variableContainer.appendChild(newVariable);
     varnames.add(clone.querySelector('input[type="text"]').value);
 
