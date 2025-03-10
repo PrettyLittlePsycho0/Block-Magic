@@ -12,6 +12,8 @@ draggables.forEach(i => {
     });
     
 });
+
+// Make sure variable has a name.
 program.addEventListener('dragover', (e) => {
     if(dj === "variable") {
         if ((document.getElementById("varname")).value === "") {
@@ -36,9 +38,12 @@ program.addEventListener('drop', (e) => {
     clone.setAttribute("draggable", "false");
     clone.classList.add('code');
 
+    //remove a block by clicking middle mouse button
     clone.addEventListener('mousedown', (event) => {
+        //also removing specific variable blocks when there initialization block is removed
         if (event.button === 1) {
             if (clone.classList.contains("vari")) {
+                varnames.delete(clone.getAttribute("var-id"))
                 const c = document.querySelectorAll('.created_variables');
                 c.forEach(i => {
                     if (i.getAttribute("var-id") === clone.getAttribute("var-id")) {
@@ -50,39 +55,42 @@ program.addEventListener('drop', (e) => {
         }
     });
     
-
+    //Behaviour if the being dropped block is a variable block.
     if (clone.classList.contains("vari")) {
-        const name = clone.children[2];
-        const value = clone.querySelector('input[type="number"]');
-        clone.setAttribute("var-id", clone.querySelector('input[type="text"]').value)
-        if (varnames.has(clone.querySelector('input[type="text"]').value)) {
+        const name = clone.children[1];
+       
+        const value = clone.children[2];
+        clone.setAttribute("var-id", name.value)
+
+        //Show error if variable with the same name already exists.
+        if (varnames.has(name.value)) {
             error.style.color = "red";
             error.innerHTML += `"${name.value}" name already exists cunt!<br>`;
             return;
         }
-        clone.setAttribute("typeof", t);
+
         clone.setAttribute("stored-value", `${value.value}`);
-        (clone.children[1]).style.display = "none";
+
+        //Hide unneccessary stuff(Not deleting).
         name.style.display = "none";
+        value.style.display = "none";
+
+        // Variable definition confirmation.
         const definedStatement = document.createElement('p');
         definedStatement.innerHTML = name.value + "&nbsp;" + "Defined.";
-        value.style.display = "none";
-        createVariable(clone, e);
+        
+        //Create a new variable block in the variable container for easy access.
+        createVariable(clone);
         name.remove();
         value.remove();
         clone.appendChild(definedStatement);
+        clone.id = name.value;
     }
 
     if (clone.classList.contains("created_variables")) {
-        clone.innerText = "";
-        const name = document.createElement('p');
-        name.innerText = clone.getAttribute("var-id");
-        clone.appendChild(name);
-        
         const valueInput = document.createElement('input');
-        valueInput.setAttribute("type", clone.getAttribute("typeof") === "int" ? "number" : "text");
         valueInput.setAttribute("placeholder", "Value");
-        valueInput.style = "text-align: center; border-radius: 10px; outline: none; border: 1px solid rgb(0, 0, 0, 0.4);"
+        valueInput.classList.add("valueInput")
         valueInput.setAttribute("oninput", "realtimevaluechange(this, this.parentElement)")
         clone.appendChild(valueInput);
     }
@@ -108,8 +116,6 @@ program.addEventListener('drop', (e) => {
                 b.forEach(i => {
                     if (i.hasAttribute('var-id')) {
                         a = document.querySelector(`[var-id = ${cl.getAttribute("var-id")}]`);
-                        const m = getClosestElement(clone, "var-id", cl);
-                        cl.setAttribute("stored-value", m.getAttribute("stored-value"));
                         
                     }
                 })
@@ -129,26 +135,89 @@ program.addEventListener('drop', (e) => {
     }
 
     if (clone.classList.contains("inp")) {
-        inputHandler(clone);
+        clone.addEventListener('drop', (e) => {
+            const iD = e.dataTransfer.getData('text');
+            const ele = document.getElementById(iD);
+            console.log(ele)
+            let x;
+            if (ele.classList.contains('created_variables')) {
+                x = getClosestSiblingBefore2(clone, "var-id", ele.getAttribute("var-id"))
+                if (x) {
+                    clone.setAttribute("var-id", x.getAttribute("var-id"))
+                    if (ele.classList.contains('created_variables') && x.getAttribute("var-id") == ele.getAttribute("var-id")) {
+                        const cl = ele.cloneNode(true);
+                        cl.style.height = "20px";
+                        cl.style.cursor = "normal";
+                        cl.setAttribute("draggable", "false");
+                        cl.classList.add("pri_output");
+                        cl.setAttribute("id", null)
+                        clone.appendChild(cl);
+                    }
+                    else {
+                        error.innerHTML += `Define the specific variable first!<br>`;
+                        error.style.color = "red";
+                    }
+                } 
+                else {
+                    error.innerHTML += `Define a variable first!<br>`;
+                    error.style.color = "red";
+                }
+            }
+            else {
+                error.innerHTML += `That's not a varible!`;
+                error.style.color = "red";
+            }
+            
+        })
     }
 
-    if (!(e.target.classList.contains("print_output") || e.target.classList.contains("pri_output") || e.target.classList.contains("bleh"))) {
+
+    if (!(e.target.classList.contains("print_output") || e.target.classList.contains("pri_output") || e.target.classList.contains("bleh") || e.target.classList.contains("inp"))) {
         program.appendChild(clone);
     }
 });
+function getClosestSiblingBefore(element, attributeName) {
+    let prevElement = element.previousElementSibling;
+    
+    while (prevElement) {
+        if (prevElement.hasAttribute(attributeName)) {
+            return prevElement;
+        }
+        prevElement = prevElement.previousElementSibling;
+    }
 
+    return null; // No matching element found
+}
+function getClosestSiblingBefore2(element, attributeName, attributeValue) {
+    let prevElement = element.previousElementSibling;
+    
+    while (prevElement) {
+        if (prevElement.getAttribute(attributeName) === attributeValue) {
+            return prevElement;
+        }
+        prevElement = prevElement.previousElementSibling;
+    }
 
+    return null; // No matching element found
+}
 function print(element) {
     const s = element.querySelector('input[type="text"]');
     var input;
     if (s === null) {
-        const w = (element.querySelector('.created_variables')).getAttribute("stored-value");
-        input = w;
+        const variable_block_in_print = (element.querySelector('.created_variables'));
+        const lastSavedValueElement = getClosestSiblingBefore2(element, "var-id", variable_block_in_print.getAttribute("var-id"));
+        if (lastSavedValueElement) {
+            variable_block_in_print.setAttribute("stored-value", lastSavedValueElement.getAttribute("stored-value"));
+        }
+            
+       
+        input = variable_block_in_print.getAttribute("stored-value");
     }
     else {
         input = s.value;
     }
-    output.innerText += input;
+    let newstr = input.replace(/ /g, "&nbsp;");
+    output.innerHTML += newstr;
 }
 
 function lineBreak(element) {
@@ -167,33 +236,30 @@ function emptySpace(element) {
 
 function cl() {
     output.innerText = "";
+    error.innerHTML = "";
 }
 
 
 
-function run(){
+async function run() {
     cl();
-    const code = document.querySelectorAll('.code');
-    code.forEach(g => {
-        if (g.classList.contains('pri')) {
-            print(g);
-        }
-        else if (g.classList.contains('bre')) {
-            lineBreak(g);
-        }
-        else if (g.classList.contains('spa')) {
-            emptySpace(g);
-        }
-        else if (g.classList.contains('clr')) {
+    const code_blocks = document.querySelectorAll('.code');
+
+    for (const code_block of code_blocks) { 
+        if (code_block.classList.contains('pri')) {
+            print(code_block);
+        } 
+        else if (code_block.classList.contains('bre')) {
+            lineBreak(code_block);
+        } 
+        else if (code_block.classList.contains('spa')) {
+            emptySpace(code_block);
+        } 
+        else if (code_block.classList.contains('clr')) {
             cl();
+        } 
+        else if (code_block.classList.contains('inp')) {
+            await input(code_block);
         }
-        else if (g.classList.contains("inp")) {
-            if (g.children[1]) {
-                input();
-            }
-            else {
-                error.innerHTML += "One or more of your inputs don't have a variable to store the value in, motherfucker!<br>"
-            }
-        }
-    });
+    }
 }

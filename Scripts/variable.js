@@ -1,21 +1,15 @@
 const variable = document.getElementById("variable");
 variableContainer = document.getElementById("variable_container");
-const varValue = document.getElementById("varvalue");
-
-var t = "int";
-function f(d) {
-    t = d.value
-}
 
 
-function createVariable(clone, o) {
+function createVariable(clone) {
     const newVariable = document.createElement('div');
 
+    //set neccessary attributes.
     newVariable.classList.add("created_variables");
     newVariable.classList.add("blocks");
     newVariable.setAttribute("id", ("id-" + Date.now() + "-" + Math.random().toString(36).substr(2, 9)));
     newVariable.setAttribute("var-id", clone.getAttribute("var-id"));
-    newVariable.setAttribute("typeof", t);
 
     
   
@@ -30,10 +24,10 @@ function createVariable(clone, o) {
 
  
 
-    if (o.target.classList.contains("inp")) {
-        return;
-    }
+
     variableContainer.appendChild(newVariable);
+
+    //add the name of the new variable to a set to prevent other variable definitions with the same name.
     varnames.add(clone.querySelector('input[type="text"]').value);
 
 }
@@ -43,18 +37,3 @@ function realtimevaluechange(valueInput, clone) {
     clone.setAttribute("stored-value", newValue);
 }
 
-function getClosestElement(element, attr, cl) {
-    let sibling = element.previousElementSibling;
-    let closestElement = null;
-
-    while (sibling) {
-        if (sibling.hasAttribute(attr)) {
-            closestElement = sibling;
-            if (closestElement.getAttribute(attr) === cl.getAttribute(attr)) {
-                return closestElement;
-            }
-            sibling = sibling.previousElementSibling;
-        }
-
-    }
-}

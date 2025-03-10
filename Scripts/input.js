@@ -1,28 +1,35 @@
-function inputHandler(clone) {
-    clone.addEventListener('drop', (e) => {
-        const id = e.dataTransfer.getData('text');
-        const ele = document.getElementById(id);
-        const cl = ele.cloneNode(true);
-        cl.style.height = "20px";
-        cl.style.cursor = "normal";
-        cl.setAttribute("id", null);
-        if (cl.classList.contains("created_variables")) {
-            clone.append(cl);
-            if (cl.classList.contains("vari")) {
-                variableContainer.lastChild.remove();
-            }
-        }
-        else {
-            error.innerHTML += "That's not a variable idiot!<br>";
-        }
 
+
+
+function input(element) {
+    return new Promise((resolve) => {
+        if (element.children.length === 0) {
+            error.innerHTML += `"Input" needs a variable to work dipshit!<br>`;
+            resolve(); 
+        } 
+        else {
+            let input_field = document.createElement('input');
+            input_field.classList.add('inp_field');
+            output.appendChild(input_field);
+            input_field.focus();
+
+            input_field.addEventListener("keydown", function(event) {
+                if (event.key === "Enter") {
+                    event.preventDefault();
+                    let text = input_field.value;
+                    element.setAttribute("stored-value", text)
+                    if (text.trim() !== "") {
+                        output.innerText += element.getAttribute("stored-value");
+                        const variable_inside = element.querySelector('.created_variables');
+                        variable_inside.setAttribute("stored-value", input_field.value);
+                        input_field.remove();
+                        output.innerHTML += "<br>";
+                        
+                        resolve(); 
+                    }
+                }           
+            });
+        }
     });
 }
-
-function input() {
-    const inputField = document.createElement('input');
-    inputField.setAttribute("type", "text");
-    inputField.style = "background-color: black; color: white; outline: none; border: none; font-weight: 600; font-size: 1rem; min-width: 100%; width: auto";
-    output.append(inputField);
-    inputField.focus()
-}
+        

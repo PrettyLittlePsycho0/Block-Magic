@@ -13,7 +13,7 @@
     outline: none;
 }
 
-#print_output:focus {
+.print_output:focus {
     border: 2px solid rgb(255, 187, 0);
 }
 

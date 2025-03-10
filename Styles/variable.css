@@ -61,3 +61,10 @@
 .created_variables:active {
     cursor: grabbing;
 }
+
+.valueInput {
+    text-align: center; 
+    border-radius: 10px; 
+    outline: none; 
+    border: 1px solid rgb(0, 0, 0, 0.4);
+}

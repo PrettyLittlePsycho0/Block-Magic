@@ -24,7 +24,7 @@
             <section id="blockset">
                 <div id="print" class="pri blocks" draggable="true">
                     <h>Print</h>
-                    <input style="text-align: center;" type="text" placeholder="Message" class="print_output">
+                    <input type="text" placeholder="Message" class="print_output">
                 </div>
                 
                 <div id="break_point" class="bre blocks" draggable="true">
@@ -32,24 +32,17 @@
                     <input id="br_input" style="text-align: center;" type="number" min="0" max="100" placeholder="0-100">
                 </div>
 
-                <div id="empty_space" class="spa blocks" draggable="true">
-                    <h>Spaces</h>
-                    <input style="text-align: center;" type="number" min="0" max="500" placeholder="0-500" id="space_input">
-                </div>
+               
                 <div id="clear_screen" class="clr blocks" draggable="true">Clear Screen</div>
                 <div id="variable" style="width: 230px;" class="vari blocks" draggable="true">
                     <h>Variable</h>
-                    <select onchange="f(this)" style="width: 40px; outline: none; border-radius: 10px;">
-                        <option value="int">Int</option>
-                        <option value="float">Float</option>
-                        <option value="string">String</option>
-                    </select>
                     <input type="text" placeholder="Name" id="varname">
                     <input type="number" placeholder="Value" id="varvalue">
                 </div>
-                <div id="input" class="inp blocks bleh" draggable="true">
-                    <p class="bleh">Input</p>
+                <div id="input" class="inp blocks" draggable="true">Input 
+                    
                 </div>
+                
             </section>
             <div style="display: flex; align-items: center; gap: 3px;" >
                 <button onclick="run()">Run</button>
@@ -72,4 +65,5 @@
 <script src="Scripts/Source_Code.js"></script>
 <script src="Scripts/variable.js"></script>
 <script src="Scripts/input.js"></script>
+
 </html>
