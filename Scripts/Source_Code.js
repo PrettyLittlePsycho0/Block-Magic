@@ -96,6 +96,11 @@ program.addEventListener('drop', (e) => {
     }
 
     if (clone.classList.contains("pri")) {
+        const output_message_field = clone.children[1];
+        output_message_field.addEventListener('dblclick', () => {
+            output_message_field.classList.add("evaluable");
+            output_message_field.setAttribute("placeholder", "Expression")
+        })
         clone.addEventListener('drop', (e) => {
             if (e.target.classList.contains("print_output") || e.target.classList.contains("pri_output")) {
                 
@@ -222,17 +227,12 @@ function print(element) {
 
 function lineBreak(element) {
     const brIn = element.querySelector('input[type="number"]')
-    for (let i = 0; i <= brIn.value; i++) {
+    for (let i = 0; i < brIn.value; i++) {
         output.appendChild(document.createElement('br'));
+
     }
 }
 
-function emptySpace(element) {
-    const amount = element.querySelector('input[type="number"]');
-    for (let i = 1; i <= amount.value; i++) {
-        output.innerHTML += "&nbsp;";
-    }
-}
 
 function cl() {
     output.innerText = "";
@@ -252,9 +252,7 @@ async function run() {
         else if (code_block.classList.contains('bre')) {
             lineBreak(code_block);
         } 
-        else if (code_block.classList.contains('spa')) {
-            emptySpace(code_block);
-        } 
+       
         else if (code_block.classList.contains('clr')) {
             cl();
         } 
