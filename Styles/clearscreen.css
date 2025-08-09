@@ -1,6 +1,7 @@
 .clr {
     color: chartreuse;
     border: 2px solid lime;
+    background-color: rgb(0, 0, 81);
 }
 
 #clear_screen {

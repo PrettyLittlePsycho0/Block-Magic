@@ -57,15 +57,15 @@ program.addEventListener('drop', (e) => {
     
     //Behaviour if the being dropped block is a variable block.
     if (clone.classList.contains("vari")) {
-        const name = clone.children[1];
+        const name = clone.querySelector('.varname');
        
-        const value = clone.children[2];
+        const value = clone.querySelector('.varvalue');
         clone.setAttribute("var-id", name.value)
 
         //Show error if variable with the same name already exists.
         if (varnames.has(name.value)) {
             error.style.color = "red";
-            error.innerHTML += `"${name.value}" name already exists cunt!<br>`;
+            error.innerHTML += `"${name.value}" name already exists!<br>`;
             return;
         }
 
@@ -77,7 +77,7 @@ program.addEventListener('drop', (e) => {
 
         // Variable definition confirmation.
         const definedStatement = document.createElement('p');
-        definedStatement.innerHTML = name.value + "&nbsp;" + "Defined.";
+        definedStatement.innerHTML = name.value.trim() + "&nbsp;" + "Defined.";
         
         //Create a new variable block in the variable container for easy access.
         createVariable(clone);

@@ -2,6 +2,7 @@
     border: 2px solid rgb(223, 126, 0);
     color: rgb(255, 123, 0);
     cursor: grab;
+    background-color: rgb(0, 0, 81);
 }
 .inp:active {
     cursor: grabbing;
