@@ -12,6 +12,25 @@
     <title>Block Magic</title>
 </head>
 <body>
+    <div class="variable-creation-window" style="display: none;">
+        <div class="form">
+            <p>Variable</p>
+            <p style="font-size: 12px; text-align:left;">Data Type:</p>
+            <select onchange="typeHandler(this)" id="data-types" name="data-types">
+                <option value="Number">Number</option>
+                <option value="String">String</option>
+            </select>
+            <p style="font-size: 12px; text-align:left;">Name:</p>
+            <input type="text" class="varname" placeholder="Name">
+            <p style="font-size: 12px; text-align:left;">Value:</p>
+            <input type="number" class="varvalue" placeholder="Value">
+            <div class="err"></div>
+            <div class="button-carrier">
+                <button onclick="variableForm()">Back</button>
+                <button onclick="creation()">Create</button>
+            </div>
+        </div>
+    </div>
     <div id="tobeblur">
         <section class="sections">
             <h id="headings">Program</h>
@@ -19,7 +38,9 @@
         </section>
         <section class="sections" >
             <h id="headings">Variables</h>
-            <section id="variable_container" ></section>
+            <section id="variable_container" >
+                <button onclick="variableForm()">+</button>
+            </section>
             <h id="headings">Block Set</h>
             <section id="blockset">
                 <div id="print" class="pri blocks" draggable="true">
@@ -34,11 +55,7 @@
 
                
                 <div id="clear_screen" class="clr blocks" draggable="true">Clear Screen</div>
-                <div id="variable" style="width: 230px;" class="vari blocks" draggable="true">
-                    <p>Variable<p>
-                    <input type="text" placeholder="Name" class="varname" id="varname">
-                    <input type="number" placeholder="Value" class="varvalue" id="varvalue">
-                </div>
+                
                 <div id="input" class="inp blocks" draggable="true">Input 
                     
                 </div>

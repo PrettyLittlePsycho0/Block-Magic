@@ -3,6 +3,7 @@ const program = document.getElementById('program');
 const output = document.getElementById("output");
 const errors = document.getElementById("errors");
 const error = document.getElementById("error");
+let dj;
 error.style.color = "red"
 let varnames = new Set();
 draggables.forEach(i => {
@@ -42,50 +43,9 @@ program.addEventListener('drop', (e) => {
     clone.addEventListener('mousedown', (event) => {
         //also removing specific variable blocks when there initialization block is removed
         if (event.button === 1) {
-            if (clone.classList.contains("vari")) {
-                varnames.delete(clone.getAttribute("var-id"))
-                const c = document.querySelectorAll('.created_variables');
-                c.forEach(i => {
-                    if (i.getAttribute("var-id") === clone.getAttribute("var-id")) {
-                        i.remove();
-                    }
-                })
-            }
             clone.remove();
         }
     });
-    
-    //Behaviour if the being dropped block is a variable block.
-    if (clone.classList.contains("vari")) {
-        const name = clone.querySelector('.varname');
-       
-        const value = clone.querySelector('.varvalue');
-        clone.setAttribute("var-id", name.value)
-
-        //Show error if variable with the same name already exists.
-        if (varnames.has(name.value)) {
-            error.style.color = "red";
-            error.innerHTML += `"${name.value}" name already exists!<br>`;
-            return;
-        }
-
-        clone.setAttribute("stored-value", `${value.value}`);
-
-        //Hide unneccessary stuff(Not deleting).
-        name.style.display = "none";
-        value.style.display = "none";
-
-        // Variable definition confirmation.
-        const definedStatement = document.createElement('p');
-        definedStatement.innerHTML = name.value.trim() + "&nbsp;" + "Defined.";
-        
-        //Create a new variable block in the variable container for easy access.
-        createVariable(clone);
-        name.remove();
-        value.remove();
-        clone.appendChild(definedStatement);
-        clone.id = name.value;
-    }
 
     if (clone.classList.contains("created_variables")) {
         const valueInput = document.createElement('input');
@@ -133,7 +93,7 @@ program.addEventListener('drop', (e) => {
                 }
                 else {
                     error.style.color = "red";
-                    error.innerHTML += `Use "${cl.firstChild.textContent}" after its definition asshole!<br>`;
+                    error.innerHTML += `Use "${cl.firstChild.textContent}" after its definition!<br>`;
                 }
             }
         });
@@ -143,7 +103,6 @@ program.addEventListener('drop', (e) => {
         clone.addEventListener('drop', (e) => {
             const iD = e.dataTransfer.getData('text');
             const ele = document.getElementById(iD);
-            console.log(ele)
             let x;
             if (ele.classList.contains('created_variables')) {
                 x = getClosestSiblingBefore2(clone, "var-id", ele.getAttribute("var-id"))
@@ -214,8 +173,6 @@ function print(element) {
         if (lastSavedValueElement) {
             variable_block_in_print.setAttribute("stored-value", lastSavedValueElement.getAttribute("stored-value"));
         }
-            
-       
         input = variable_block_in_print.getAttribute("stored-value");
     }
     else {
@@ -229,34 +186,25 @@ function lineBreak(element) {
     const brIn = element.querySelector('input[type="number"]')
     for (let i = 0; i < brIn.value; i++) {
         output.appendChild(document.createElement('br'));
-
     }
 }
-
 
 function cl() {
     output.innerText = "";
     error.innerHTML = "";
 }
 
-
-
 async function run() {
     cl();
     const code_blocks = document.querySelectorAll('.code');
-
     for (const code_block of code_blocks) { 
         if (code_block.classList.contains('pri')) {
             print(code_block);
-        } 
-        else if (code_block.classList.contains('bre')) {
+        } else if (code_block.classList.contains('bre')) {
             lineBreak(code_block);
-        } 
-       
-        else if (code_block.classList.contains('clr')) {
+        } else if (code_block.classList.contains('clr')) {
             cl();
-        } 
-        else if (code_block.classList.contains('inp')) {
+        } else if (code_block.classList.contains('inp')) {
             await input(code_block);
         }
     }
